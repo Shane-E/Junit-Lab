@@ -1,19 +1,25 @@
 package view;
 
+import controller.App;
+import controller.Authenticator;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import model.User;
 
-public class MainPanel extends JPanel{
+public class MainPanel extends JPanel implements ActionListener{
     private final JLabel usernameLabel, passwordLabel;
     private final JTextField username;
     private final JPasswordField password;
     private final JButton login;
+    private final Authenticator loginChecker;
     
     public MainPanel(){
         username = new JTextField();
@@ -21,6 +27,8 @@ public class MainPanel extends JPanel{
         usernameLabel = new JLabel("Username: ");
         passwordLabel = new JLabel("Password: ");
         login = new JButton("Login");
+        
+        loginChecker = new Authenticator(new User());
         
         setupLogin();
     }
@@ -57,10 +65,19 @@ public class MainPanel extends JPanel{
         loginButtonC.gridx = 1;
         loginButtonC.gridy = 2;
         
+        login.addActionListener(this);
+        
         add(usernameLabel, usernameLabelC);
         add(username, usernameFieldC);
         add(passwordLabel, passwordLabelC);
         add(password, passwordFieldC);
         add(login, loginButtonC);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == login){
+            loginChecker.authenticateUser(username, password);
+        }
     }
 }
