@@ -28,7 +28,7 @@ public class MainPanel extends JPanel implements ActionListener{
         passwordLabel = new JLabel("Password: ");
         login = new JButton("Login");
         
-        loginChecker = new Authenticator(new User());
+        loginChecker = new Authenticator();
         
         setupLogin();
     }
@@ -78,6 +78,11 @@ public class MainPanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == login){
             loginChecker.authenticateUser(username, password);
+            if(loginChecker.checkPassword(password)){
+                loginChecker.authenticateUser(username, password);
+            }else{
+                System.out.println("Password Authentication Failed.");
+            }
         }
     }
 }

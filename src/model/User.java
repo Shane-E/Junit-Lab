@@ -6,7 +6,7 @@ public class User {
     
     public User(){
         username = "test";
-        password = "123";
+        password = "Abcdefgh1!";
     }
     
     public String getUsername(){
